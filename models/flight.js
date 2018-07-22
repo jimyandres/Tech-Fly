@@ -3,11 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const Flight = new Schema({
-  number: { type: String, unique: true },
-  airline: Schema.Types.Mixed,
-  aircraft: Schema.Types.Mixed,
-  originAirport: Schema.Types.Mixed,
-  destinationAirport: Schema.Types.Mixed,
+  airline: { type: Schema.Types.ObjectId, ref: 'Airline' },
+  aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
+  originAirport: { type: Schema.Types.ObjectId, ref: 'Airport' },
+  destinationAirport: { type: Schema.Types.ObjectId, ref: 'Airport' },
   departureTime: String,
   arrivalTime: String,
   cost: Number,
