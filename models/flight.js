@@ -7,8 +7,8 @@ const Flight = new Schema({
   aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
   originAirport: { type: Schema.Types.ObjectId, ref: 'Airport' },
   destinationAirport: { type: Schema.Types.ObjectId, ref: 'Airport' },
-  departureTime: String,
-  arrivalTime: String,
+  departureTime: Date,
+  arrivalTime: Date,
   cost: Number,
 });
 
