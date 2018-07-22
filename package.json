@@ -4,7 +4,11 @@
   "description": "Tech & Fly platform",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www",
+    "start-prod": "SET NODE_ENV=production&& node ./bin/www",
+    "test": "jest",
+    "lint": "eslint .",
+    "build-prod": "SET NODE_ENV=production&&webpack -p --config webpack.config.js"
   },
   "repository": {
     "type": "git",
