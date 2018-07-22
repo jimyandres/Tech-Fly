@@ -9,7 +9,7 @@ const router = express.Router();
 // config mongoose promise
 mongoose.Promise = global.Promise;
 
-// Check if airline exists and if not, save it
+// Check if the airline exists and if not, save it
 const saveAirline = async (airlineInfo, res) => {
   const airlineQuery = await Airline.findOne({ name: airlineInfo.name });
   if (!airlineQuery) {
@@ -20,8 +20,9 @@ const saveAirline = async (airlineInfo, res) => {
       }
       return res.json(airline);
     });
+  } else {
+    return res.json({ error: 'The airline is already in the database.' });
   }
-  return res.json({ error: 'The airline is already in the database.' });
 };
 
 // POST to /
@@ -31,8 +32,7 @@ router.post('/', async (req, res) => {
 
   try {
     // Save it to the DB if it's not already there
-    const airlineSaved = await saveAirline(airlineInfo, res);
-    return airlineSaved;
+    return await saveAirline(airlineInfo, res);
   } catch (err) {
     result = res.json({ error: 'There was an error saving the airline to the database. Please try again.' });
   }
