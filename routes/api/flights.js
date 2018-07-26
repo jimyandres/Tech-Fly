@@ -28,10 +28,10 @@ const getFlights = async (req, res) => {
       if (err) {
         return res.json({ error: 'There was an error getting the flights. Please try again.' });
       }
-      if (flights.length() === 0) {
-        return res.json({ msg: 'There are no results. Please try again.' });
+      if (flights.length === 0) {
+        return res.json({ error: 'There are no results. Please try again.' });
       }
-      return res.json(flights);
+      return res.json({ flights: flights.map(l => l.toObject({ virtuals: true })) });
     });
 };
 
