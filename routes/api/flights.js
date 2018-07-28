@@ -13,17 +13,19 @@ mongoose.Promise = global.Promise;
 // Get all flights
 const getFlights = async (req, res) => {
   const { origin, destination, date = Date() } = req.query;
+  const newDate = new Date(date);
   await Flight.find({
     originAirport: ObjectId(origin),
     destinationAirport: ObjectId(destination),
-    departureTime: { $gte: new Date(date) },
+    departureTime: {
+      $gte: newDate,
+      $lte: new Date(newDate.setHours(5 * 24)), // Get flights between 5 days
+    },
   })
     .populate({ path: 'airline', select: 'name' })
-    .populate({ path: 'aircraft', select: 'registration' })
-    .populate({ path: 'aircraft', select: 'seatsNumber' })
+    .populate('aircraft')
     .populate('originAirport')
     .populate('destinationAirport')
-    .limit(5)
     .exec((err, flights) => {
       if (err) {
         return res.json({ error: 'There was an error getting the flights. Please try again.' });
