@@ -14,12 +14,13 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
 // Route files
+const indexRouter = require('./routes/index');
 const aircrafts = require('./routes/api/aircrafts');
 const airlines = require('./routes/api/airlines');
 const airports = require('./routes/api/airports');
-const flights = require('./routes/api/flights');
 const api = require('./routes/api/index');
-const indexRouter = require('./routes/index');
+const flights = require('./routes/api/flights');
+const users = require('./routes/api/users');
 
 const app = express();
 
@@ -67,6 +68,7 @@ app.use('/api/aircrafts', aircrafts);
 app.use('/api/airlines', airlines);
 app.use('/api/airports', airports);
 app.use('/api/flights', flights);
+app.use('/api/users', users);
 app.use('/*', indexRouter);
 
 // catch 404 and forward to error handler
