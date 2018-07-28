@@ -10,12 +10,14 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
-      date: moment(),
-      options: [{ id: 0, location: 'Nothing here.' }],
       origin: '',
       destination: '',
+      date: moment().format('YYYY-MM-DD'),
+      filters: ['origin', 'destination', 'date'],
+      options: [{ id: 0, location: 'Nothing here.' }],
     };
 
+    this.handleFilters = this.handleFilters.bind(this);
     this.searchFlights = this.searchFlights.bind(this);
   }
 
@@ -37,10 +39,21 @@ class HomePage extends Component {
 
   searchFlights() {
     const { searchFlightsFunction } = this.props;
-    const { origin, destination, date } = this.state;
-    if (typeof origin[0] !== 'undefined' && typeof destination[0] !== 'undefined') {
-      searchFlightsFunction({ origin, destination, date });
+    const {
+      origin,
+      destination,
+      date,
+      filters,
+    } = this.state;
+    if (origin !== '' && destination !== '' && date !== '' && moment(date).format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD')) {
+      const params = [];
+      filters.map(filter => params.push({ name: filter, value: this.state[filter] }));
+      searchFlightsFunction(params);
     }
+  }
+
+  handleFilters(filterValue = '', filterName) {
+    this.setState({ [filterName]: filterValue });
   }
 
   render() {
@@ -56,7 +69,7 @@ class HomePage extends Component {
                 labelKey="location"
                 options={this.state.options}
                 placeholder="Choose a state..."
-                onChange={(from) => this.setState({origin: from})}
+                onChange={from => this.handleFilters(from[0] ? from[0].id : '', 'origin')}
               />
             </InputGroup>
             <br />
@@ -66,13 +79,18 @@ class HomePage extends Component {
                 labelKey="location"
                 options={this.state.options}
                 placeholder="Choose a state..."
-                onChange={(to) => this.setState({destination: to})}
+                onChange={to => this.handleFilters(to[0] ? to[0].id : '', 'destination')}
               />
             </InputGroup>
             <br />
             <InputGroup>
               <InputGroupAddon addonType="prepend">Fecha</InputGroupAddon>
-              <Input type="date" onChange={(date) => this.setState({date: date.target.value})} />
+              <Input
+                type="date"
+                min={moment().format('YYYY-MM-DD')}
+                onChange={date => this.handleFilters(date.target.value, 'date')}
+                defaultValue={this.state.date}
+              />
             </InputGroup>
             <br />
             <Button onClick={this.searchFlights} block>Buscar</Button>

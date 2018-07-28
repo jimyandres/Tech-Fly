@@ -12,10 +12,10 @@ mongoose.Promise = global.Promise;
 
 // Get all flights
 const getFlights = async (req, res) => {
-  const { from, to, date = Date() } = req.query;
+  const { origin, destination, date = Date() } = req.query;
   await Flight.find({
-    originAirport: ObjectId(from),
-    destinationAirport: ObjectId(to),
+    originAirport: ObjectId(origin),
+    destinationAirport: ObjectId(destination),
     departureTime: { $gte: new Date(date) },
   })
     .populate({ path: 'airline', select: 'name' })

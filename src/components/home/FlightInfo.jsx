@@ -26,12 +26,8 @@ class FlightInfo extends Component {
     } = this.props;
     return (
       <Card>
-        <CardHeader color="primary" onClick={this.toggle}>
-          {
-            moment(departureTime, "YYYYMMDD HH:mm Z").format("MMM Do YY, h:mm:ss a")
-            +
-            ' (' + airline + ')  $' + cost
-          }
+        <CardHeader color="primary" onClick={this.toggle} className="pointer">
+          {`${moment(departureTime, 'YYYYMMDD HH:mm Z').format('MMMM D, YYYY, h:mm a')} (${airline})  $${cost}`}
         </CardHeader>
         <Collapse
           isOpen={this.state.collapse}
@@ -39,18 +35,19 @@ class FlightInfo extends Component {
           <CardBody>
             <CardTitle>{airline}</CardTitle>
             <CardText>
-              <p>
+              <span>
                 <strong>
                   Desde:
                 </strong>
-                {origin + moment(departureTime, 'YYYYMMDD HH:mm Z').format('MMM Do YY, h:mm:ss a')}
-              </p>
-              <p>
+                {origin + moment(departureTime, 'YYYYMMDD HH:mm Z').format('dddd, MMMM Do YYYY, h:mm a')}
+              </span>
+              <br />
+              <span>
                 <strong>
                   Hasta:
                 </strong>
-                {destination + moment(arrivalTime, 'YYYYMMDD HH:mm Z').format('MMM Do YY, h:mm:ss a')}
-              </p>
+                {destination + moment(arrivalTime, 'YYYYMMDD HH:mm Z').format('dddd, MMMM Do YYYY, h:mm a')}
+              </span>
             </CardText>
             <Button disabled >Reservar</Button>
           </CardBody>
