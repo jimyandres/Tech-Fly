@@ -18,8 +18,8 @@ const getFlights = async (req, res) => {
     originAirport: ObjectId(origin),
     destinationAirport: ObjectId(destination),
     departureTime: {
-      $gte: newDate,
-      $lte: new Date(newDate.setHours(5 * 24)), // Get flights between 5 days
+      $gte: new Date(date),
+      $lte: new Date(newDate.setUTCHours(5 * 24)), // Get flights between 5 days
     },
   })
     .populate({ path: 'airline', select: 'name' })
