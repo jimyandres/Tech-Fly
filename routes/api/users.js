@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongoose').Types;
 
 // Models
 const User = require('../../models/user');
@@ -9,6 +8,17 @@ const router = express.Router();
 
 // config mongoose promise
 mongoose.Promise = global.Promise;
+
+// Get user info by his id
+const getUserInfo = async (userId, res) => {
+  const userQuery = await User.findOne({
+    id: userId,
+  });
+  if (!userQuery) {
+    return res.json({ error: 'The user requested does not exists. Please check the information.' });
+  }
+  return res.json(userQuery);
+};
 
 // Check if the user exists and if not, save it
 const saveUser = async (userInfo, res) => {
@@ -38,6 +48,21 @@ router.post('/', async (req, res) => {
     return await saveUser(userInfo, res);
   } catch (e) {
     result = res.json({ error: 'There was an error saving the user info. Please try again.' });
+  }
+
+  return result;
+});
+
+// Get to /:id
+router.get('/:id', async (req, res) => {
+  const userId = req.params.id;
+  let result;
+
+  try {
+    // Get user info
+    return await getUserInfo(userId, res);
+  } catch (e) {
+    result = res.json({ error: "There was an error getting the user's info. Please try again." });
   }
 
   return result;
