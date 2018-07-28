@@ -2,7 +2,7 @@
   "name": "tech-fly",
   "version": "0.1.0",
   "description": "Tech & Fly platform",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
     "start-prod": "SET NODE_ENV=production&& node ./bin/www",

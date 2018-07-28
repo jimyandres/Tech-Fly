@@ -53,7 +53,7 @@ const saveFlight = async (flightInfo, res) => {
       return res.json(flight);
     });
   } else {
-    return res.json({ error: 'The flight is already in the database. Please check the aircraft info.' });
+    return res.json({ error: 'The flight is already in the database. Please check the flight info.' });
   }
 };
 

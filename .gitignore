@@ -62,3 +62,7 @@ typings/
 
 # App Configuration
 config.json
+
+# builds
+public/javascripts/*
+public/stylesheets/*
