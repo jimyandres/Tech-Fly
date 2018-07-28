@@ -22,6 +22,12 @@ Para este proyecto se utilizó MongoDB. Para instalarlo sigue las siguientes [in
 
 Antes de ejecutar el proyecto se debe asegurar que el demonio de base de datos de MongoDB se haya [iniciado correctamente](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#verify-that-mongodb-has-started-successfully).
 
+Para iniciar el proyecto con información inicial, es posible ejecutar el siguiente comando en la carpeta del proyecto:
+
+```
+mongo localhost:27017/techandfly --quiet data-script.js
+```
+
 Este proyecto tiene dos modos de ejecución:
 
 - Development mode:
