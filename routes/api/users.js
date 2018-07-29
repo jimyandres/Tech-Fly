@@ -22,6 +22,27 @@ const getUserInfo = async (userId, res) => {
   return res.json(userQuery);
 };
 
+const getUserReservations = async (userId, res) => {
+  const userQuery = await User.findOne({
+    id: userId,
+  })
+    .populate({
+      path: 'reservations',
+      populate: {
+        path: 'flight',
+        populate: {
+          path: 'airline aircraft originAirport destinationAirport',
+        },
+      },
+    })
+    .select('reservations');
+
+  if (!userQuery) {
+    return res.json({ error: 'There was an error getting the reservations from the database. Please try again.' });
+  }
+  return res.json(userQuery.reservations);
+};
+
 // Check the restrictions to make the reservation
 const saveReservation = async (userId, reservationInfo, res) => {
   // Get the user's info
@@ -118,6 +139,21 @@ router.post('/:user_id/reservations', async (req, res) => {
     return await saveReservation(userId, reservationInfo, res);
   } catch (e) {
     result = res.json({ error: 'There was an error making the reservation. Please try again.' });
+  }
+
+  return result;
+});
+
+// GET to/:user_id/reservations
+router.get('/:user_id/reservations', async (req, res) => {
+  const userId = req.params.user_id;
+  let result;
+
+  try {
+    // Get the reservations
+    return await getUserReservations(userId, res);
+  } catch (e) {
+    result = res.json({ error: 'There was an error getting the reservations. Please try again.' });
   }
 
   return result;
