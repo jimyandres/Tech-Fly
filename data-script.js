@@ -1,4 +1,6 @@
 /* eslint-disable */;
+const now = new Date().setHours(0,0,0,0);
+const hours = 60*60*1000;
 db.aircrafts.insert([
   { "seatsNumber" : 525, "registration" : "Airbus A380-800", "__v" : 0 },
   { "seatsNumber" : 550, "registration" : "Boeing 777-300", "__v" : 0 },
@@ -25,18 +27,28 @@ db.airports.insert([
   { "code" : "MDE", "name" : "José María Córdova", "location" : "Medellín / Rionegro", "__v" : 0 },
   { "code" : "ADZ", "name" : "Gustavo Rojas Pinilla", "location" : "San Andrés", "__v" : 0 }
 ]);
-var aircrafts = db.aircrafts.aggregate([{$sample: {size:5}},{ $project: {"_id":1}}]);
-var airlines = db.airlines.aggregate([{$sample: {size:9}},{ $project: {"_id":1}}]);
-var airports = db.airports.aggregate([{$sample: {size:6}},{ $project: {"_id":1}}]);
+var ac = db.aircrafts.aggregate([{$sample: {size:5}},{ $project: {"_id":1}}]);
+var al = db.airlines.aggregate([{$sample: {size:9}},{ $project: {"_id":1}}]);
+var ap = db.airports.aggregate([{$sample: {size:6}},{ $project: {"_id":1}}]);
 db.flights.insert([
-  { "airline" : airlines._batch[0]._id, "aircraft" : aircrafts._batch[0]._id, "originAirport" : airports._batch[0]._id, "destinationAirport" : airports._batch[3]._id, "departureTime" : ISODate("2018-08-09T09:20:00Z"), "arrivalTime" : ISODate("2018-08-09T11:40:00Z"), "cost" : 273860, "__v" : 0 },
-  { "airline" : airlines._batch[1]._id, "aircraft" : aircrafts._batch[1]._id, "originAirport" : airports._batch[0]._id, "destinationAirport" : airports._batch[4]._id, "departureTime" : ISODate("2018-07-27T15:25:00Z"), "arrivalTime" : ISODate("2018-07-27T19:10:00Z"), "cost" : 273860, "__v" : 0 },
-  { "airline" : airlines._batch[2]._id, "aircraft" : aircrafts._batch[2]._id, "originAirport" : airports._batch[3]._id, "destinationAirport" : airports._batch[2]._id, "departureTime" : ISODate("2018-07-28T22:19:00Z"), "arrivalTime" : ISODate("2018-07-29T01:14:00Z"), "cost" : 347710, "__v" : 0 },
-  { "airline" : airlines._batch[3]._id, "aircraft" : aircrafts._batch[3]._id, "originAirport" : airports._batch[4]._id, "destinationAirport" : airports._batch[1]._id, "departureTime" : ISODate("2018-07-30T03:39:00Z"), "arrivalTime" : ISODate("2018-07-30T04:37:00Z"), "cost" : 273860, "__v" : 0 },
-  { "airline" : airlines._batch[4]._id, "aircraft" : aircrafts._batch[4]._id, "originAirport" : airports._batch[1]._id, "destinationAirport" : airports._batch[2]._id, "departureTime" : ISODate("2018-07-30T01:29:00Z"), "arrivalTime" : ISODate("2018-07-30T04:54:00Z"), "cost" : 231200, "__v" : 0 },
-  { "airline" : airlines._batch[4]._id, "aircraft" : aircrafts._batch[2]._id, "originAirport" : airports._batch[2]._id, "destinationAirport" : airports._batch[3]._id, "departureTime" : ISODate("2018-08-09T09:20:00Z"), "arrivalTime" : ISODate("2018-08-09T11:40:00Z"), "cost" : 273860, "__v" : 0 },
-  { "airline" : airlines._batch[1]._id, "aircraft" : aircrafts._batch[1]._id, "originAirport" : airports._batch[1]._id, "destinationAirport" : airports._batch[0]._id, "departureTime" : ISODate("2018-08-10T15:25:00Z"), "arrivalTime" : ISODate("2018-08-10T19:10:00Z"), "cost" : 273860, "__v" : 0 },
-  { "airline" : airlines._batch[2]._id, "aircraft" : aircrafts._batch[3]._id, "originAirport" : airports._batch[3]._id, "destinationAirport" : airports._batch[2]._id, "departureTime" : ISODate("2018-08-10T22:19:00Z"), "arrivalTime" : ISODate("2018-08-11T01:14:00Z"), "cost" : 347710, "__v" : 0 },
-  { "airline" : airlines._batch[3]._id, "aircraft" : aircrafts._batch[0]._id, "originAirport" : airports._batch[0]._id, "destinationAirport" : airports._batch[1]._id, "departureTime" : ISODate("2018-08-11T03:39:00Z"), "arrivalTime" : ISODate("2018-08-11T04:37:00Z"), "cost" : 273860, "__v" : 0 },
-  { "airline" : airlines._batch[0]._id, "aircraft" : aircrafts._batch[4]._id, "originAirport" : airports._batch[1]._id, "destinationAirport" : airports._batch[3]._id, "departureTime" : ISODate("2018-08-11T01:29:00Z"), "arrivalTime" : ISODate("2018-08-11T04:54:00Z"), "cost" : 231200, "__v" : 0 }
+  { "airline" : al._batch[0]._id, "aircraft" : ac._batch[0]._id, "originAirport" : ap._batch[0]._id, "destinationAirport" : ap._batch[3]._id,
+    "departureTime" : new Date(now + 32*hours), "arrivalTime" :new Date(now + 34.3*hours), "cost" : 273860, "__v" : 0 },
+  { "airline" : al._batch[1]._id, "aircraft" : ac._batch[1]._id, "originAirport" : ap._batch[0]._id, "destinationAirport" : ap._batch[4]._id,
+    "departureTime" : new Date(now + 15.4*hours), "arrivalTime" : new Date(now + 19.4*hours), "cost" : 273860, "__v" : 0 },
+  { "airline" : al._batch[2]._id, "aircraft" : ac._batch[2]._id, "originAirport" : ap._batch[3]._id, "destinationAirport" : ap._batch[2]._id,
+    "departureTime" : new Date(now + 46.1*hours), "arrivalTime" : new Date(now + 49.11*hours), "cost" : 347710, "__v" : 0 },
+  { "airline" : al._batch[3]._id, "aircraft" : ac._batch[3]._id, "originAirport" : ap._batch[4]._id, "destinationAirport" : ap._batch[1]._id,
+    "departureTime" : new Date(now + 70.65*hours), "arrivalTime" : new Date(now + 71.616*hours), "cost" : 273860, "__v" : 0 },
+  { "airline" : al._batch[4]._id, "aircraft" : ac._batch[4]._id, "originAirport" : ap._batch[1]._id, "destinationAirport" : ap._batch[2]._id,
+    "departureTime" : new Date(now + 68.483*hours), "arrivalTime" : new Date(now + 71.9*hours), "cost" : 231200, "__v" : 0 },
+  { "airline" : al._batch[4]._id, "aircraft" : ac._batch[2]._id, "originAirport" : ap._batch[2]._id, "destinationAirport" : ap._batch[3]._id,
+    "departureTime" : new Date(now + 316.33*hours), "arrivalTime" : new Date(now + 318.66*hours), "cost" : 273860, "__v" : 0 },
+  { "airline" : al._batch[1]._id, "aircraft" : ac._batch[1]._id, "originAirport" : ap._batch[1]._id, "destinationAirport" : ap._batch[0]._id,
+    "departureTime" : new Date(now + 346.416*hours), "arrivalTime" : new Date(now + 350.16*hours), "cost" : 273860, "__v" : 0 },
+  { "airline" : al._batch[2]._id, "aircraft" : ac._batch[3]._id, "originAirport" : ap._batch[3]._id, "destinationAirport" : ap._batch[2]._id,
+    "departureTime" : new Date(now + 353.31*hours), "arrivalTime" : new Date(now + 356.23*hours), "cost" : 347710, "__v" : 0 },
+  { "airline" : al._batch[3]._id, "aircraft" : ac._batch[0]._id, "originAirport" : ap._batch[0]._id, "destinationAirport" : ap._batch[1]._id,
+    "departureTime" : new Date(now + 358.65*hours), "arrivalTime" : new Date(now + 359.616*hours), "cost" : 273860, "__v" : 0 },
+  { "airline" : al._batch[0]._id, "aircraft" : ac._batch[4]._id, "originAirport" : ap._batch[1]._id, "destinationAirport" : ap._batch[3]._id,
+    "departureTime" : new Date(now + 356.48*hours), "arrivalTime" : new Date(now + 359.9*hours), "cost" : 231200, "__v" : 0 }
 ]);
