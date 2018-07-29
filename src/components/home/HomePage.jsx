@@ -10,10 +10,10 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
-      origin: '',
-      destination: '',
+      originAirport: '',
+      destinationAirport: '',
       date: moment().format('YYYY-MM-DD'),
-      filters: ['origin', 'destination', 'date'],
+      filters: ['originAirport', 'destinationAirport', 'date'],
       options: [{ id: 0, location: 'Nothing here.' }],
     };
 
@@ -40,12 +40,12 @@ class HomePage extends Component {
   searchFlights() {
     const { searchFlightsFunction } = this.props;
     const {
-      origin,
-      destination,
+      originAirport,
+      destinationAirport,
       date,
       filters,
     } = this.state;
-    if (origin !== '' && destination !== '' && date !== '' && moment(date).format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD')) {
+    if (originAirport !== '' && destinationAirport !== '' && date !== '' && moment(date).format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD')) {
       const params = [];
       filters.map(filter => params.push({ name: filter, value: this.state[filter] }));
       searchFlightsFunction(params);
@@ -69,7 +69,7 @@ class HomePage extends Component {
                 labelKey="location"
                 options={this.state.options}
                 placeholder="Choose a state..."
-                onChange={from => this.handleFilters(from[0] ? from[0].id : '', 'origin')}
+                onChange={from => this.handleFilters(from[0] ? from[0].id : '', 'originAirport')}
               />
             </InputGroup>
             <br />
@@ -79,7 +79,7 @@ class HomePage extends Component {
                 labelKey="location"
                 options={this.state.options}
                 placeholder="Choose a state..."
-                onChange={to => this.handleFilters(to[0] ? to[0].id : '', 'destination')}
+                onChange={to => this.handleFilters(to[0] ? to[0].id : '', 'destinationAirport')}
               />
             </InputGroup>
             <br />

@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongoose').Types;
 
 // Models
 const Flight = require('../../models/flight');
@@ -10,18 +9,39 @@ const router = express.Router();
 // config mongoose promise
 mongoose.Promise = global.Promise;
 
+// Construct the query to find flights
+const queryConstructor = (queryParams) => {
+  const keys = Object.keys(queryParams);
+  const query = {};
+  keys.map((key) => {
+    switch (key) {
+      case 'originAirport':
+      case 'destinationAirport': {
+        return Object.assign(query, { [key]: queryParams[key] });
+      }
+      case 'date': {
+        const newDate = new Date(queryParams[key]);
+        return Object.assign(query, {
+          departureTime: {
+            $gte: new Date(queryParams[key]),
+            $lte: new Date(newDate.setUTCHours(5 * 24)), // Get flights between 5 days
+          },
+        });
+      }
+      default: {
+        return null;
+      }
+    }
+  });
+  return query;
+};
+
 // Get all flights
 const getFlights = async (req, res) => {
-  const { origin, destination, date = Date() } = req.query;
-  const newDate = new Date(date);
-  await Flight.find({
-    originAirport: ObjectId(origin),
-    destinationAirport: ObjectId(destination),
-    departureTime: {
-      $gte: new Date(date),
-      $lte: new Date(newDate.setUTCHours(5 * 24)), // Get flights between 5 days
-    },
-  })
+  // Build the query object
+  const query = queryConstructor(req.query);
+
+  await Flight.find(query)
     .populate({ path: 'airline', select: 'name' })
     .populate('aircraft')
     .populate('originAirport')
