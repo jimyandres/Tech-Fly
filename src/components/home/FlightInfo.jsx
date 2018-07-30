@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Button, Collapse, CardBody, Card, CardHeader, CardTitle, CardText } from 'reactstrap';
+import { Collapse, CardBody, Card, CardHeader, CardTitle, CardText } from 'reactstrap';
+import ReservationForm from './ReservationForm';
 
 class FlightInfo extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: false };
+
+    this.state = {
+      collapse: false,
+    };
   }
 
   toggle() {
@@ -17,12 +21,13 @@ class FlightInfo extends Component {
   render() {
     moment.locale('es');
     const {
-      origin,
-      destination,
-      departureTime,
+      id,
       arrivalTime,
-      airline,
       cost,
+      departureTime,
+      destination,
+      airline,
+      origin,
     } = this.props;
     return (
       <Card>
@@ -49,7 +54,7 @@ class FlightInfo extends Component {
                 {destination + moment(arrivalTime, 'YYYYMMDD HH:mm Z').format('dddd, MMMM Do YYYY, h:mm a')}
               </span>
             </CardText>
-            <Button disabled >Reservar</Button>
+            <ReservationForm flightId={id} />
           </CardBody>
         </Collapse>
       </Card>

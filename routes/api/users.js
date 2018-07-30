@@ -51,8 +51,8 @@ const saveReservation = async (userId, reservationInfo, res) => {
   })
     .populate('reservations')
     .exec(async (err, userInfo) => {
-      const { id, birthday, reservations } = userInfo;
-      if (id) {
+      if (userInfo !== null) {
+        const { birthday, reservations } = userInfo;
         // Add the user id to the reservation
         Object.assign(reservationInfo, { user: userInfo._id });
         // Check the age of the user
@@ -66,7 +66,7 @@ const saveReservation = async (userId, reservationInfo, res) => {
               if (error) {
                 return res.json({ error: 'There was an error saving the reservation to the database. Please try again.' });
               }
-              return res.json(reservation);
+              return res.json({ reservation });
             });
           } else {
             return res.json({ error: "You can't make more than one reservation per day." });
@@ -75,7 +75,7 @@ const saveReservation = async (userId, reservationInfo, res) => {
           return res.json({ error: 'You must have at least 18 years to make a reservation.' });
         }
       } else {
-        return res.json({ error: "The user doesn't exists. Please verify the information." });
+        return res.json({ error: "The user doesn't exists. Please verify the information.", no_user: true });
       }
     });
 };
@@ -91,7 +91,7 @@ const saveUser = async (userInfo, res) => {
       if (error) {
         return res.json({ error: 'There was an error saving the User to the database. Please try again.' });
       }
-      return res.json(user);
+      return res.json({ user });
     });
   } else {
     return res.json({ error: 'The user is already in the database. Please check the information.' });
