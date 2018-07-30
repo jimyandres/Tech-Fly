@@ -70,6 +70,10 @@ http://localhost:3000/
 |`api/airports/locations`| `GET`| Obtener todas las localizaciones|
 |`api/flights`| `GET`| Obtener los vuelos|
 |`api/flights`| `POST`| Añadir un nuevo vuelo|
+|`api/users`| `POST`| Añadir un nuevo usuario|
+|`api/users/user_id`| `GET`| Obtener un usuario específico|
+|`api/users/user_id/reservations`| `GET`| Obtener todas las reservaciones hechas por un usuario|
+|`api/users/user_id/reservations`| `POST`| Realizar una nueva reservación|
 
 ## Problemas y Vulnerabilidades de Seguridad
 
