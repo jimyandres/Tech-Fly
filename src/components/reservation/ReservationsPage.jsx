@@ -38,7 +38,7 @@ class ReservationPage extends Component {
               placeholder="Documento..."
               type="number"
               name="id"
-              onKeyPress={this.handleInput}
+              onChange={this.handleInput}
             />
             <InputGroupAddon addonType="prepend">
               <Button
