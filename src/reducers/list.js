@@ -3,6 +3,7 @@ const initialState = {
   locations: [],
   lastReservation: {},
   newUser: false,
+  userReservations: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,6 +31,11 @@ const reducer = (state = initialState, action) => {
     case 'RESERVATION_FAILURE_NO_USER': {
       const newState = Object.assign({}, state);
       newState.newUser = action.json.no_user;
+      return newState;
+    }
+    case 'RESERVATION_LIST_SUCCESS': {
+      const newState = Object.assign({}, state);
+      newState.userReservations = action.json.reservations;
       return newState;
     }
     default: {

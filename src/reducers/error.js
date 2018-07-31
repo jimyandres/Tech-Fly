@@ -8,7 +8,8 @@ const reducer = (state = initialState, action) => {
     case 'ADD_USER_FAILURE':
     case 'AIRPORTS_LOCATION_FAILURE':
     case 'FLIGHT_SEARCH_FAILURE':
-    case 'RESERVATION_FAILURE': {
+    case 'RESERVATION_FAILURE':
+    case 'RESERVATION_LIST_FAILURE': {
       const newState = Object.assign({}, initialState);
       newState.isError = true;
       newState.error = action.error;

@@ -40,7 +40,7 @@ const getUserReservations = async (userId, res) => {
   if (!userQuery) {
     return res.json({ error: 'There was an error getting the reservations from the database. Please try again.' });
   }
-  return res.json(userQuery.reservations);
+  return res.json(userQuery);
 };
 
 // Check the restrictions to make the reservation
