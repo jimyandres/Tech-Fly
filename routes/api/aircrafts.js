@@ -14,7 +14,7 @@ const saveAircraft = async (aircraftInfo, res) => {
   const newAircraft = new Aircraft(aircraftInfo);
   await newAircraft.save((error, aircraft) => {
     if (error) {
-      return res.json({ error: 'There was an error saving the aircraft to the database. Please try again.' });
+      return res.json({ error });
     }
     return res.json(aircraft);
   });
