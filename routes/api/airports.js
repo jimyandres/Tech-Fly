@@ -22,7 +22,7 @@ const saveAirport = async (airportInfo, res) => {
     const newAirport = new Airport(airportInfo);
     await newAirport.save((error, airport) => {
       if (error) {
-        return res.json({ error: 'There was an error saving the airport to the database. Please try again.' });
+        return res.json({ error });
       }
       return res.json(airport);
     });
