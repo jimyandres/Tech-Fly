@@ -68,7 +68,7 @@ const saveFlight = async (flightInfo, res) => {
     const newFlight = new Flight(flightInfo);
     await newFlight.save((error, flight) => {
       if (error) {
-        return res.json({ error: 'There was an error saving the flight to the database. Please try again.' });
+        return res.json({ error });
       }
       return res.json(flight);
     });
