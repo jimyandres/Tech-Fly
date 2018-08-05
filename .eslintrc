@@ -19,5 +19,7 @@
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
     }],
     "linebreak-style": 0,
+    "func-names": ["error", "never"],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
   },
 }
