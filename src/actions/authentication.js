@@ -81,6 +81,47 @@ const logUserIn = userData => async (dispatch) => {
   return dispatch(decrementProgress());
 };
 
+// Register a User
+const registerUser = userData => async (dispatch) => {
+  // Clear the error box if it is displayed
+  dispatch(clearError());
+
+  // turn on spinner
+  dispatch(incrementProgress());
+
+  // contact the API
+  await fetch(
+    // where to contact
+    '/api/authentication/register',
+    // what to send
+    {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+    },
+  ).then((response) => {
+    if (response.status === 200) {
+      return response.json();
+    }
+    return null;
+  }).then(async (json) => {
+    if (json && json.username) {
+      await dispatch(loginSuccess(json));
+      await dispatch(registrationSuccess());
+    } else {
+      dispatch(registrationFailure(new Error(json.error.message ? 'Email or username already exists.' : json.error)));
+    }
+  }).catch((error) => {
+    dispatch(registrationFailure(new Error(error.message || 'Registration Failed. Please try again.')));
+  });
+
+  // turn off spinner
+  return dispatch(decrementProgress());
+};
+
 export {
   // Action Creators
   loginAttempt,
@@ -96,4 +137,5 @@ export {
   // Others
   checkSession,
   logUserIn,
+  registerUser,
 };

@@ -24,10 +24,8 @@ class ErrorBoxContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errorStore: state.error,
-  };
-};
+const mapStateToProps = state => ({
+  errorStore: state.error,
+});
 
 export default connect(mapStateToProps)(ErrorBoxContainer);
