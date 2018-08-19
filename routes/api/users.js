@@ -77,6 +77,7 @@ const saveReservation = async (userId, reservationInfo, res) => {
       } else {
         return res.json({ error: "The user doesn't exists. Please verify the information.", no_user: true });
       }
+      return null;
     });
 };
 
@@ -96,6 +97,7 @@ const saveUser = async (userInfo, res) => {
   } else {
     return res.json({ error: 'The user is already in the database. Please check the information.' });
   }
+  return null;
 };
 
 // Post to /

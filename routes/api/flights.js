@@ -59,7 +59,6 @@ const getFlights = async (req, res) => {
 
 // Check if the flight exists and if not, save it
 const saveFlight = async (flightInfo, res) => {
-
   const flightQuery = await Flight.findOne({
     aircraft: flightInfo.aircraft,
     departureTime: flightInfo.departureTime,
@@ -75,6 +74,7 @@ const saveFlight = async (flightInfo, res) => {
   } else {
     return res.json({ error: 'The flight is already in the database. Please check the flight info.' });
   }
+  return null;
 };
 
 // GET to /
