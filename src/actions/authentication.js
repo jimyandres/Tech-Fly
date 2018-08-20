@@ -81,6 +81,39 @@ const logUserIn = userData => async (dispatch) => {
   return dispatch(decrementProgress());
 };
 
+// Log User Out
+const logUserOut = () => {
+  return async (dispatch) => {
+    // Clear the error box if it is displayed
+    dispatch(clearError());
+
+    // turn on spinner
+    dispatch(incrementProgress());
+
+    // contact the API
+    await fetch(
+      // where to contact
+      '/api/authentication/logout',
+      // what to send
+      {
+        method: 'GET',
+        credentials: 'same-origin',
+      },
+    ).then((response) => {
+      if (response.status === 200) {
+        dispatch(logoutSuccess());
+      } else {
+        dispatch(logoutFailure(new Error(response.status)));
+      }
+    }).catch((err) => {
+      dispatch(logoutFailure(new Error(err)));
+    });
+
+    // turn off spinner
+    dispatch(decrementProgress());
+  };
+};
+
 // Register a User
 const registerUser = userData => async (dispatch) => {
   // Clear the error box if it is displayed
@@ -137,5 +170,6 @@ export {
   // Others
   checkSession,
   logUserIn,
+  logUserOut,
   registerUser,
 };

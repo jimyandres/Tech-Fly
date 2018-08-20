@@ -42,11 +42,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(passport.initialize());
-app.use(compression());
-app.use(passport.session());
-app.use(helmet());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Session
 const sessionValues = {
@@ -61,6 +56,11 @@ if (app.get('env') === 'production') {
   sessionValues.cookie.secure = true;
 }
 app.use(expressSession(sessionValues));
+app.use(passport.initialize());
+app.use(compression());
+app.use(passport.session());
+app.use(helmet());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Webpcck Server
 if (process.env.NODE_ENV !== 'production') {
