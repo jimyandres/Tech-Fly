@@ -21,7 +21,7 @@ const Template = (props) => {
           <Route exact path="/account/login" component={LoginPage} />
           <Route exact path="/account/register" component={RegisterPage} />
           <Route exact path="/account/registration-success" component={RegistrationSuccessPage} />
-          <Route exact path="/reservations" component={ReservationsPage} />
+          <Route path="/reservations/:id" component={ReservationsPage} />
         </section>
         <div className="loader-wrapper" style={progress > 0 ? { display: 'block' } : { display: 'none' }}>
           <div className="loader-box">

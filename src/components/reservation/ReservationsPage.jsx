@@ -11,15 +11,6 @@ class ReservationPage extends Component {
     };
 
     this.handleInput = this.handleInput.bind(this);
-    this.getReservations = this.getReservations.bind(this);
-  }
-
-  getReservations() {
-    const { searchReservationsFunction } = this.props;
-    const { id } = this.state;
-    if (id.trim() !== '' && id > 0) {
-      searchReservationsFunction(id);
-    }
   }
 
   handleInput(e) {
@@ -33,23 +24,6 @@ class ReservationPage extends Component {
       <Col sm="12" md={{ size: 8, offset: 2 }}>
         <h2>Reservaciones</h2>
         <div>
-          <InputGroup>
-            <Input
-              placeholder="Documento..."
-              type="number"
-              name="id"
-              onChange={this.handleInput}
-            />
-            <InputGroupAddon addonType="prepend">
-              <Button
-                color="success"
-                onClick={this.getReservations}
-              >
-                Buscar Reservas
-              </Button>
-            </InputGroupAddon>
-          </InputGroup>
-          <br />
           <ReservationList
             reservations={reservations}
           />
